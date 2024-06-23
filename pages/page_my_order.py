@@ -2,8 +2,10 @@ from lib2to3.pgen2 import driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from pages.base_page import BasePage
+import allure
 
-class PageMyOrder:
+class PageMyOrder(BasePage):
     yandex_logo = [By.CLASS_NAME, 'Header_LogoYandex__3TSOI']
     samocat_logo = [By.CLASS_NAME, 'Header_LogoScooter__3lsAR']
     numder_order = [By.CSS_SELECTOR, '.Track_Input__1g7lq']
@@ -13,48 +15,32 @@ class PageMyOrder:
     number = '362858'
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
-
-    def click_yandex_logo(self):
-        self.driver.find_element(*self.yandex_logo).click()
-
-    def click_samocat_logo(self):
-        self.driver.find_element(*self.samocat_logo).click()
-
-
-    def click_status_order(self):
-        self.driver.find_element(*self.status_order).click()
-
-    def fill_number_in_input(self):
-        self.driver.find_element(*self.status_input).send_keys(self.number)
-
-    def click_button_go(self):
-        self.driver.find_element(*self.button_go).click()
-
-
-
+    @allure.step("Проверка редиректа по кнопке Самокат")
     def check_samokat_redirect(self):
-        self.click_status_order()
-        self.fill_number_in_input()
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.button_go))
-        self.click_button_go()
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.numder_order))
-        self.click_samocat_logo()
-        WebDriverWait(self.driver, 10).until(EC.url_to_be('https://qa-scooter.praktikum-services.ru/'))
+        self.click(self.status_order)
+        self.fill_input(self.status_input, self.number)
+        self.wait(self.button_go)
+        self.click(self.button_go)
+        self.wait(self.numder_order)
+        self.click(self.samocat_logo)
+        self.wait_url_change('https://qa-scooter.praktikum-services.ru/')
 
 
+
+    @allure.step("Проверка редиректа по логотипу Яндекса")
     def check_yandex_redirect(self):
-        self.click_status_order()
-        self.fill_number_in_input()
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.button_go))
-        self.click_button_go()
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.numder_order))
-        self.click_yandex_logo()
+        self.click(self.status_order)
+        self.fill_input(self.status_input, self.number)
+        self.wait(self.button_go)
+        self.click(self.button_go)
+        self.wait(self.numder_order)
+        self.click(self.yandex_logo)
         WebDriverWait(self.driver, 10).until(EC.number_of_windows_to_be(2))
         windows = self.driver.window_handles
         self.driver.switch_to.window(windows[1])
-        WebDriverWait(self.driver, 10).until(EC.url_contains("https://dzen.ru/?yredirect=true"))
+        self.wait_url_change('https://dzen.ru/?yredirect=true')
 
 
 

@@ -1,10 +1,10 @@
 import pytest
+import allure
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from pages.base_page import BasePage
 
 
-class MainPageDropdawnAndButtons:
+class MainPageDropdawnAndButtons(BasePage):
     dropdawn_price = [By.ID, 'accordion__heading-0']
     dropdawn_price_answer =[By.ID, 'accordion__panel-0']
     dropdawn_more_samocats = [By.ID, 'accordion__heading-1']
@@ -26,124 +26,33 @@ class MainPageDropdawnAndButtons:
 
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
+
+    @allure.step("Проверка дропдауна {element} на главной странице")
+    def check_dropdawn(self, element, answer):
+        self.scroll(element)
+        self.wait(element)
+        self.click(element)
+        self.wait_visibility(answer)
+        return self.return_text(answer)
 
 
 
-    def click_button_order_in_header(self):
-        self.driver.find_element(*self.button_order_in_header).click()
-
+    @allure.step("Клик по нижней кнопке Заказать ")
     def click_button_order_on_page(self):
         element = self.driver.find_element(*self.button_order_on_page)
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(element))
-        element.click()
-
-
-
-
-
-    def click_dropdawn_price(self):
-        element = self.driver.find_element(*self.dropdawn_price)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        element.click()
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_price_answer))
-
-    def text_price(self):
-        return self.driver.find_element(*self.dropdawn_price_answer).text
-
-
-
-
-    def click_dropdawn_more_samocats(self):
-        element = self.driver.find_element(*self.dropdawn_more_samocats)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.driver.execute_script("arguments[0].click();", element)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_more_samocats_answer))
-
-    def text_more_samocats(self):
-        return self.driver.find_element(*self.dropdawn_more_samocats_answer).text
+        self.scroll(self.button_order_on_page)
+        self.wait(self.button_order_on_page)
+        self.click(self.button_order_on_page)
 
 
 
 
 
 
-    def click_dropdawn_time(self):
-        element = self.driver.find_element(*self.dropdawn_time)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.driver.execute_script("arguments[0].click();", element)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_time_answer))
-
-
-    def text_dropdawn_time(self):
-        return self.driver.find_element(*self.dropdawn_time_answer).text
-
-
-
-
-
-    def click_dropdawn_now(self):
-        element = self.driver.find_element(*self.dropdawn_now)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.driver.execute_script("arguments[0].click();", element)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_now_answer))
-
-    def text_dropdawn_now(self):
-        return self.driver.find_element(*self.dropdawn_now_answer).text
 
 
 
 
 
 
-    def click_dropdawn_return_samokat(self):
-        element = self.driver.find_element(*self.dropdawn_return_samokat)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.driver.execute_script("arguments[0].click();", element)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_return_samokat_answer))
-
-    def text_dropdawn_return_samokat(self):
-        return self.driver.find_element(*self.dropdawn_return_samokat_answer).text
-
-
-
-
-
-    def click_dropdawn_charger(self):
-        element = self.driver.find_element(*self.dropdawn_charger)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.driver.execute_script("arguments[0].click();", element)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_charge_answer))
-
-    def text_dropdawn_charger(self):
-        return self.driver.find_element(*self.dropdawn_charge_answer).text
-
-
-
-
-
-
-    def click_dropdawn_cancell(self):
-        element = self.driver.find_element(*self.dropdawn_cancell)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.driver.execute_script("arguments[0].click();", element)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_cancell_answer))
-
-    def text_dropdawn_cancell(self):
-        return self.driver.find_element(*self.dropdawn_cancell_answer).text
-
-
-
-
-
-
-    def click_dropdawn_long_distance_dellivery(self):
-        element = self.driver.find_element(*self.dropdawn_long_distance_dellivery)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        self.driver.execute_script("arguments[0].click();", element)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.dropdawn_long_distance_dellivery_answer))
-
-
-    def text_dropdawn_long_delivery(self):
-        return self.driver.find_element(*self.dropdawn_long_distance_dellivery_answer).text
