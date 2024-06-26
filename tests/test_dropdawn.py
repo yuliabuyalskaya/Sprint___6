@@ -1,10 +1,10 @@
-import pytest
+
 from selenium import webdriver
 from pages.main_page_dropdawn import MainPageDropdawnAndButtons
 import pytest
 from pages.main_page_dropdawn import MainPageDropdawnAndButtons
 import allure
-
+from constants import main_URL
 
 class TestDropdawn:
     driver = None
@@ -28,7 +28,7 @@ class TestDropdawn:
         (MainPageDropdawnAndButtons.dropdawn_long_distance_dellivery, MainPageDropdawnAndButtons.dropdawn_long_distance_dellivery_answer, 'Да, обязательно.')])
     @allure.title("Тест дропдауна {element}")
     def test_dropdawn(self, element, answer, text):
-        self.driver.get('https://qa-scooter.praktikum-services.ru/')
+        self.driver.get(main_URL)
         dropdawn = MainPageDropdawnAndButtons(self.driver)
         text_for_test = dropdawn.check_dropdawn(element, answer)
         assert text in text_for_test

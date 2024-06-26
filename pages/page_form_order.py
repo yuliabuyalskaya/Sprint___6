@@ -3,12 +3,13 @@ import allure
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
+
 class PageFormOrder(BasePage):
     input_name = [By.CSS_SELECTOR, '.Order_Form__17u6u > div:nth-child(1) > input:nth-child(1)']
     input_surname = [By.CSS_SELECTOR, 'div.Input_InputContainer__3NykH:nth-child(2) > input:nth-child(1)']
     input_adress = [By.CSS_SELECTOR, 'div.Input_InputContainer__3NykH:nth-child(3) > input:nth-child(1)']
     input_metro = [By.CLASS_NAME, 'select-search__input']
-    select_metro = [By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[4]/div/div[2]/ul/li[1]']
+    select_metro = [By.CSS_SELECTOR, "button.Order_SelectOption__82bhS.select-search__option[value='3']"]
     input_phone = [By.CSS_SELECTOR, 'div.Input_InputContainer__3NykH:nth-child(5) > input:nth-child(1)']
     button_next = [By.CLASS_NAME, 'Button_Middle__1CSJM']
     input_calendar = [By.CSS_SELECTOR, '.react-datepicker__input-container > input:nth-child(1)']

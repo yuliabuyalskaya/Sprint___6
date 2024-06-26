@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import BasePage
 import allure
+from constants import main_URL, dzen_URL
 
 class PageMyOrder(BasePage):
     yandex_logo = [By.CLASS_NAME, 'Header_LogoYandex__3TSOI']
@@ -25,7 +26,7 @@ class PageMyOrder(BasePage):
         self.click(self.button_go)
         self.wait(self.numder_order)
         self.click(self.samocat_logo)
-        self.wait_url_change('https://qa-scooter.praktikum-services.ru/')
+        self.wait_url_change(main_URL)
 
 
 
@@ -40,7 +41,7 @@ class PageMyOrder(BasePage):
         WebDriverWait(self.driver, 10).until(EC.number_of_windows_to_be(2))
         windows = self.driver.window_handles
         self.driver.switch_to.window(windows[1])
-        self.wait_url_change('https://dzen.ru/?yredirect=true')
+        self.wait_url_change(dzen_URL)
 
 
 

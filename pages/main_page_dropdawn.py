@@ -45,6 +45,12 @@ class MainPageDropdawnAndButtons(BasePage):
         self.wait(self.button_order_on_page)
         self.click(self.button_order_on_page)
 
+    @allure.step("Клик по кнопке Заказать в хедере ")
+    def click_button_order_in_header(self):
+        self.click(self.button_order_in_header)
+
+
+
 
 
 
